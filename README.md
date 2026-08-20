@@ -92,7 +92,8 @@ question that works in the studio works in the shipped bot.
 
 ## Verification
 
-`npm run build` and `npm run typecheck` both pass. The generated output was
+`npm run build`, `npm run typecheck` and `npm audit` all pass clean
+(0 vulnerabilities). The generated output was
 checked by exporting projects across three configurations — all 13 skills, a
 namespaced build, and a minimal single-skill build — and then, in the generated
 project:
@@ -106,6 +107,11 @@ project:
   `messageCreate` fan-out, the `ready` → `clientReady` mapping, and that a
   throwing command surfaces to the user without killing the process;
 - both entry points fail with a clear message when credentials are absent.
+
+The framework runs on Next.js 16 — the 15.x line this was first written
+against carries unpatched advisories, and clearing them required the major
+bump. Generated project output is byte-identical across both, so the bump
+touches only this app.
 
 **Not verified:** live calls to the Anthropic and Voyage APIs. No credentials
 were available in the build environment, so those request shapes are type-checked
